@@ -1,0 +1,17 @@
+# --- 절대 커밋하면 안 되는 것 ---
+secret.py
+
+# --- 가상환경 / IDE ---
+.venv/
+venv/
+.idea/
+*.iml
+
+# --- 파이썬 캐시 ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# --- 출력물 ---
+out/
+*.log
