@@ -1,0 +1,52 @@
+========================================================================
+대조군 — 같은 키로 건축HUB 호출 (키 자체의 유효성 확인)
+========================================================================
+
+▶ 건축HUB / params + Decoding 키
+  HTTP 200  ✓ 성공
+  {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL SERVICE"},"body":{"items":{"item":[{"rnum":1,"platPlc":"서울특별시 관악구 봉천동 ","sigunguCd":"11620","bjdongCd":"10100","platGbCd":"0","bun":"0000","ji":"0000","mgmBldr
+
+  → 키는 유효합니다. 인허가 원장 API 쪽만의 문제입니다.
+
+========================================================================
+② 전달 방식 비교 — Decoding(params) vs Encoding(URL 직접)
+========================================================================
+
+▶ (a) params + Decoding 키  ← diag5 와 동일
+  HTTP 200  ✓ 성공
+  {"response":{"body":{"dataType":"JSON","items":{"item":[{"BIZPLC_SURRND_SE_NM":"","BLDG_PSN_SE_NM":"","BPLC_NM":"대아티아이 트웬티 압구정점","BZSTAT_SE_NM":"기타","CLSBIZ_YMD":"","CRD_INFO_X":"198259.65357739","CRD_INFO_Y":"451392.198
+
+▶ (b) URL 직접 + Encoding 키
+  HTTP 200  ✓ 성공
+  {"response":{"body":{"dataType":"JSON","items":{"item":[{"BIZPLC_SURRND_SE_NM":"","BLDG_PSN_SE_NM":"","BPLC_NM":"대아티아이 트웬티 압구정점","BZSTAT_SE_NM":"기타","CLSBIZ_YMD":"","CRD_INFO_X":"198259.65357739","CRD_INFO_Y":"451392.198
+
+▶ (c) URL 직접 + Encoding 키 + 대문자 ServiceKey
+  HTTP 200  ✓ 성공
+  {"response":{"body":{"dataType":"JSON","items":{"item":[{"BIZPLC_SURRND_SE_NM":"","BLDG_PSN_SE_NM":"","BPLC_NM":"대아티아이 트웬티 압구정점","BZSTAT_SE_NM":"기타","CLSBIZ_YMD":"","CRD_INFO_X":"198259.65357739","CRD_INFO_Y":"451392.198
+
+========================================================================
+③ 경로 변형 확인
+========================================================================
+
+▶ /history 엔드포인트
+  HTTP 200  ✓ 성공
+  {"response":{"header":{"resultCode":"-11","resultMsg":"필수 파라미터가 입력되지 않았습니다."}}}
+
+▶ 경로 끝 슬래시 제거(루트)
+  HTTP 400  ✗ 실패
+  { "OpenAPI_ServiceResponse": { "cmmMsgHeader": { "errMsg": "NO_OPENAPI_SERVICE_ERROR", "returnAuthMsg": "해당 오픈API 서비스가 없거나 폐기됨", "returnReasonCode": "12" } } }
+
+▶ http (https 아님)
+  HTTP 200  ✓ 성공
+  {"response":{"body":{"dataType":"JSON","items":{"item":[{"BIZPLC_SURRND_SE_NM":"","BLDG_PSN_SE_NM":"","BPLC_NM":"대아티아이 트웬티 압구정점","BZSTAT_SE_NM":"기타","CLSBIZ_YMD":"","CRD_INFO_X":"198259.65357739","CRD_INFO_Y":"451392.198
+
+========================================================================
+판독 가이드
+========================================================================
+  · 대조군만 성공하고 나머지 전부 403
+      → ① 활용신청 미반영. 마이페이지에서 승인 상태와
+         '일반음식점 조회서비스'가 목록에 있는지 확인 후 30분~1시간 뒤 재시도
+  · (b) 또는 (c) 만 성공
+      → ② 이 API 는 Encoding 키를 URL 에 직접 붙여야 함
+  · ③ 중 하나만 성공
+      → 경로 문제. 성공한 형태를 채택

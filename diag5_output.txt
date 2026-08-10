@@ -1,0 +1,102 @@
+========================================================================
+1. 파라미터 탐색  —  /info
+========================================================================
+
+▶ A. serviceKey 만
+  파라미터: {}
+  HTTP 403  Content-Type: application/json
+  items=None  total=None
+  ── 응답 앞부분 ──
+  {
+    "OpenAPI_ServiceResponse": {
+      "cmmMsgHeader": {
+        "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+        "returnAuthMsg": "등록되지 않은 서비스키",
+        "returnReasonCode": "30"
+      }
+    }
+  }
+  
+
+▶ B. pageNo/numOfRows + _type
+  파라미터: {'pageNo': '1', 'numOfRows': '5', '_type': 'json'}
+  HTTP 403  Content-Type: application/json
+  items=None  total=None
+  ── 응답 앞부분 ──
+  {
+    "OpenAPI_ServiceResponse": {
+      "cmmMsgHeader": {
+        "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+        "returnAuthMsg": "등록되지 않은 서비스키",
+        "returnReasonCode": "30"
+      }
+    }
+  }
+  
+
+▶ C. pageIndex/pageSize + resultType
+  파라미터: {'pageIndex': '1', 'pageSize': '5', 'resultType': 'json'}
+  HTTP 403  Content-Type: application/json
+  items=None  total=None
+  ── 응답 앞부분 ──
+  {
+    "OpenAPI_ServiceResponse": {
+      "cmmMsgHeader": {
+        "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+        "returnAuthMsg": "등록되지 않은 서비스키",
+        "returnReasonCode": "30"
+      }
+    }
+  }
+  
+
+▶ D. localCode(개방자치단체코드)
+  파라미터: {'pageIndex': '1', 'pageSize': '5', 'resultType': 'json', 'localCode': '3220000'}
+  HTTP 403  Content-Type: application/json
+  items=None  total=None
+  ── 응답 앞부분 ──
+  {
+    "OpenAPI_ServiceResponse": {
+      "cmmMsgHeader": {
+        "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+        "returnAuthMsg": "등록되지 않은 서비스키",
+        "returnReasonCode": "30"
+      }
+    }
+  }
+  
+
+▶ E. sigunguCd(행정표준코드)
+  파라미터: {'pageNo': '1', 'numOfRows': '5', '_type': 'json', 'sigunguCd': '11620'}
+  HTTP 403  Content-Type: application/json
+  items=None  total=None
+  ── 응답 앞부분 ──
+  {
+    "OpenAPI_ServiceResponse": {
+      "cmmMsgHeader": {
+        "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+        "returnAuthMsg": "등록되지 않은 서비스키",
+        "returnReasonCode": "30"
+      }
+    }
+  }
+  
+
+▶ F. type=json (밑줄 없음)
+  파라미터: {'pageNo': '1', 'numOfRows': '5', 'type': 'json'}
+  HTTP 403  Content-Type: application/json
+  items=None  total=None
+  ── 응답 앞부분 ──
+  {
+    "OpenAPI_ServiceResponse": {
+      "cmmMsgHeader": {
+        "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+        "returnAuthMsg": "등록되지 않은 서비스키",
+        "returnReasonCode": "30"
+      }
+    }
+  }
+  
+
+✗ 동작하는 파라미터 조합을 찾지 못했습니다.
+  공공데이터포털 활용가이드(첨부문서)를 확인해야 합니다.
