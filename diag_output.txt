@@ -1,0 +1,55 @@
+
+------------------------------------------------------------------------
+▶ ① 현재 조합 (bun/ji 4자리 zero-pad)
+  파라미터: {'numOfRows': '5', 'pageNo': '1', 'sigunguCd': '11620', 'bjdongCd': '10100', 'platGbCd': '0', 'bun': '1570', 'ji': '0001', '_type': 'json'}
+  HTTP 200   Content-Type: application/json
+  totalCount = 0
+  ── 응답 원문 (앞 700자) ──
+  {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL SERVICE"},"body":{"items":{"item":[]},"numOfRows":"5","pageNo":"1","totalCount":"0"}}}
+
+------------------------------------------------------------------------
+▶ ② _type 제거 (XML 응답 확인)
+  파라미터: {'numOfRows': '5', 'pageNo': '1', 'sigunguCd': '11620', 'bjdongCd': '10100', 'platGbCd': '0', 'bun': '1570', 'ji': '0001'}
+  HTTP 200   Content-Type: application/json
+  ── 응답 원문 (앞 700자) ──
+  {"header":{"resultCode":"00","resultMsg":"NORMAL SERVICE"},"body":{"items":{"item":[]},"numOfRows":"5","pageNo":"1","totalCount":"0"}}
+
+------------------------------------------------------------------------
+▶ ③ bun/ji 제거 (법정동 전체 조회)
+  파라미터: {'numOfRows': '5', 'pageNo': '1', 'sigunguCd': '11620', 'bjdongCd': '10100', '_type': 'json'}
+  HTTP 200   Content-Type: application/json
+  totalCount = 12951
+  ── 응답 원문 (앞 700자) ──
+  {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL SERVICE"},"body":{"items":{"item":[{"rnum":1,"platPlc":"서울특별시 관악구 봉천동 ","sigunguCd":"11620","bjdongCd":"10100","platGbCd":"0","bun":"0000","ji":"0000","mgmBldrgstPk":1022133575,"regstrGbCd":"1","regstrGbCdNm":"일반","regstrKindCd":"2","regstrKindCdNm":"일반건축물","newPlatPlc":" ","bldNm":"4-1구역17-2 아름빌딩","splotNm":" ","block":" ","lot":" ","bylotCnt":0,"naRoadCd":" ","naBjdongCd":" ","naUgrndCd":"0","naMainBun":"0","naSubBun":"0","dongNm":" ","mainAtchGbCd":"0","mainAtchGbCdNm":"주건축물","platArea":177.4,"archArea":105.69,"bcRat":59.57,"totArea":589.58,"vlRatEstmTotArea":484.61,"vlRat":273.17,"strctCd":"21","strctCdNm":"철근콘크리트구조","etcStrct"
+
+------------------------------------------------------------------------
+▶ ④ platGbCd 제거
+  파라미터: {'numOfRows': '5', 'pageNo': '1', 'sigunguCd': '11620', 'bjdongCd': '10100', 'bun': '1570', 'ji': '0001', '_type': 'json'}
+  HTTP 200   Content-Type: application/json
+  totalCount = 0
+  ── 응답 원문 (앞 700자) ──
+  {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL SERVICE"},"body":{"items":{"item":[]},"numOfRows":"5","pageNo":"1","totalCount":"0"}}}
+
+------------------------------------------------------------------------
+▶ ⑤ bun/ji zero-pad 없이
+  파라미터: {'numOfRows': '5', 'pageNo': '1', 'sigunguCd': '11620', 'bjdongCd': '10100', 'platGbCd': '0', 'bun': '1570', 'ji': '1', '_type': 'json'}
+  HTTP 200   Content-Type: application/json
+  totalCount = 0
+  ── 응답 원문 (앞 700자) ──
+  {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL SERVICE"},"body":{"items":{"item":[]},"numOfRows":"5","pageNo":"1","totalCount":"0"}}}
+
+------------------------------------------------------------------------
+▶ ⑥ 부번 없는 지번 (봉천동 862)
+  파라미터: {'numOfRows': '5', 'pageNo': '1', 'sigunguCd': '11620', 'bjdongCd': '10100', 'platGbCd': '0', 'bun': '0862', 'ji': '0000', '_type': 'json'}
+  HTTP 200   Content-Type: application/json
+  totalCount = 0
+  ── 응답 원문 (앞 700자) ──
+  {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL SERVICE"},"body":{"items":{"item":[]},"numOfRows":"5","pageNo":"1","totalCount":"0"}}}
+
+------------------------------------------------------------------------
+▶ ⑦ 교차 확인 (강남구 11680 삼성동 10500)
+  파라미터: {'numOfRows': '5', 'pageNo': '1', 'sigunguCd': '11680', 'bjdongCd': '10500', '_type': 'json'}
+  HTTP 200   Content-Type: application/json
+  totalCount = 2400
+  ── 응답 원문 (앞 700자) ──
+  {"response":{"header":{"resultCode":"00","resultMsg":"NORMAL SERVICE"},"body":{"items":{"item":[{"rnum":1,"platPlc":"서울특별시 강남구 삼성동 1-1번지","sigunguCd":"11680","bjdongCd":"10500","platGbCd":"0","bun":"0001","ji":"0001","mgmBldrgstPk":102419120,"regstrGbCd":"1","regstrGbCdNm":"일반","regstrKindCd":"2","regstrKindCdNm":"일반건축물","newPlatPlc":"서울특별시 강남구 학동로 402 (삼성동)","bldNm":" ","splotNm":" ","block":" ","lot":" ","bylotCnt":2,"naRoadCd":"116803122011","naBjdongCd":"10502","naUgrndCd":"0","naMainBun":"402","naSubBun":"0","dongNm":" ","mainAtchGbCd":"0","mainAtchGbCdNm":"주건축물","platArea":2003.6,"archArea":942.02,"bcRat":47.02,"totArea":8862.1,"vlRatEstmTotArea":7368.18,"vlRat":367.75,"strctCd":"21","

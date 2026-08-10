@@ -72,12 +72,13 @@ def check(label, sigungu, bjdong, bun, ji):
         print(f"  ✗ {exc}")
 
     # ── [1] 층별개요 ────────────────────────────────────────────────
+    # 층별개요가 실패해도 정화조는 독립적으로 조회해야 하므로 return 하지 않습니다.
     print("\n[1] 층별개요  getBrFlrOulnInfo")
+    floors = []
     try:
         floors = call("getBrFlrOulnInfo", sigungu, bjdong, bun, ji)
     except ApiError as exc:
         print(f"  ✗ {exc}")
-        return
 
     if not floors:
         print("  (데이터 없음 — 해당 지번에 건축물대장이 없을 수 있습니다)")
@@ -152,10 +153,50 @@ def coord_check():
         print(f"  https://map.kakao.com/link/map/확인지점,{lat},{lon}")
 
 
+class _Tee:
+    """콘솔과 파일에 동시 출력 (검증 결과를 output.txt 로 남기기 위함)."""
+
+    def __init__(self, *streams):
+        self.streams = streams
+
+    def write(self, data):
+        for stream in self.streams:
+            stream.write(data)
+
+    def flush(self):
+        for stream in self.streams:
+            stream.flush()
+
+
 if __name__ == "__main__":
-    for target in TARGETS:
+    import io
+    import sys
+
+    buffer = io.StringIO()
+    original = sys.stdout
+    sys.stdout = _Tee(original, buffer)
+
+    try:
+        for target in TARGETS:
+            try:
+                check(*target)
+            except Exception as exc:                  # noqa: BLE001
+                print(f"  ✗ 예외 {type(exc).__name__}: {exc}")
+        coord_check()
+    finally:
+        sys.stdout = original
+        text = buffer.getvalue()
+        # 혹시 모를 키 노출 방지 — 출력에 섞인 serviceKey 값을 가립니다.
         try:
-            check(*target)
-        except Exception as exc:                      # noqa: BLE001
-            print(f"  ✗ 예외 {type(exc).__name__}: {exc}")
-    coord_check()
+            from secret import SERVICE_KEY
+            from urllib.parse import quote
+
+            for token in {SERVICE_KEY, quote(SERVICE_KEY, safe="")}:
+                if token:
+                    text = text.replace(token, "<SERVICE_KEY_REDACTED>")
+        except Exception:                             # noqa: BLE001
+            pass
+
+        with open("output.txt", "w", encoding="utf-8") as fp:
+            fp.write(text)
+        print("\n[저장] output.txt 에 결과를 기록했습니다. (인증키는 자동 마스킹)")
